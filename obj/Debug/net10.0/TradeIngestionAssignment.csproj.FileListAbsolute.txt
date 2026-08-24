@@ -175,4 +175,3 @@ C:\Users\gamab\source\repos\TradeIngestionAssignment\bin\Debug\net10.0\Serilog.S
 C:\Users\gamab\source\repos\TradeIngestionAssignment\bin\Debug\net10.0\Serilog.Sinks.Debug.dll
 C:\Users\gamab\source\repos\TradeIngestionAssignment\bin\Debug\net10.0\Serilog.Sinks.File.dll
 C:\Users\gamab\source\repos\TradeIngestionAssignment\obj\Debug\net10.0\TradeIngestionAssignment.sourcelink.json
-C:\Users\gamab\source\repos\TradeIngestionAssignment\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

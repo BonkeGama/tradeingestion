@@ -18,6 +18,18 @@
 - **Enabled (default):** snapshot uses `AppliedTrades` projection, protecting against duplicate re-sends and applying later corrections.
 - **Disabled:** ingestion still stores audit events, but snapshot reads raw `TradeEvents` (legacy-like behavior, duplicates can impact totals).
 - This allows gradual rollout with a reversible switch during adoption.
+- 
+## Choices Made
+
+I used async operations to help the API handle requests efficiently, and dependency injection to keep the different parts of the application loosely connected and easier to manage.
+
+I also used OpenAPI during development, which makes it easy to test and explore the API endpoints. i used interfaces too for easier test implementation and decoupling.
+
+## Trade offs
+
+For this assignment, I focused mainly on keeping the solution simple, clear, and easy to understand rather than adding unnecessary complexity.
+
+If this was developed further for a real production environment, I would look at adding things like better logging and monitoring, caching where needed, and more performance and load testing.
 
 ## Structured Logging
 - JSON console logging with scopes.
@@ -47,3 +59,20 @@
 - Use a compatible data-access layer boundary (repository/service contracts) so legacy callers can consume via HTTP or shared DB contracts.
 - Prefer out-of-process structured logging sink (e.g., Serilog sink/ETW/EventSource bridge) if modern logging abstractions are limited in older hosting stacks.
 - Keep dependencies isolated: modern API service can run side-by-side while .NET Framework 4.8 apps integrate through REST or messaging.
+
+## Prompts
+
+-	Ingestion business logic
+•	“Implement TradeIngestionService to:
+•	always store an audit TradeEvent,
+•	create new AppliedTrade when external_ref is new,
+•	ignore stale/duplicate when as_of is older or equal,
+•	apply correction when as_of is newer.”
+-	Simple demo UI
+•	“Create wwwroot/index.html with forms/buttons to submit trade, duplicate, correction, and load snapshot; print API response.”
+-	Error handling in UI
+•	“Update UI fetch calls to handle non-JSON/error responses safely and always show output.”
+-	Tests
+•	“Add integration tests for ingestion flow: new trade, duplicate ignored, correction applied, and expected snapshot values.”
+-	Documentation
+•	“Write README.md with local run steps and SOLUTION.md with architecture, design decisions, trade-offs, and limitations.”

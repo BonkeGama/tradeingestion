@@ -1,2 +1,0 @@
-wwwroot\index.html
-C:\Users\gamab\source\repos\TradeIngestionAssignment\wwwroot\index.html
