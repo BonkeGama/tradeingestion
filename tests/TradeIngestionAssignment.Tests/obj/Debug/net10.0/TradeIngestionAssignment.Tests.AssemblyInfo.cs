@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TradeIngestionAssignment.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b06c343c2f9ac85eb29329dbe4573ab593b2ca81")]
 [assembly: System.Reflection.AssemblyProductAttribute("TradeIngestionAssignment.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TradeIngestionAssignment.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

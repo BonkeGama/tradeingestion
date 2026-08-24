@@ -165,3 +165,14 @@ C:\Users\gamab\source\repos\TradeIngestionAssignment\obj\Debug\net10.0\TradeInge
 C:\Users\gamab\source\repos\TradeIngestionAssignment\obj\Debug\net10.0\ref\TradeIngestionAssignment.dll
 C:\Users\gamab\source\repos\TradeIngestionAssignment\bin\Debug\net10.0\TradeIngestionAssignment.staticwebassets.runtime.json
 C:\Users\gamab\source\repos\TradeIngestionAssignment\obj\Debug\net10.0\compressed\hp5voe950p-{0}-cse2m8h7rt-cse2m8h7rt.gz
+C:\Users\gamab\source\repos\TradeIngestionAssignment\bin\Debug\net10.0\Serilog.dll
+C:\Users\gamab\source\repos\TradeIngestionAssignment\bin\Debug\net10.0\Serilog.AspNetCore.dll
+C:\Users\gamab\source\repos\TradeIngestionAssignment\bin\Debug\net10.0\Serilog.Extensions.Hosting.dll
+C:\Users\gamab\source\repos\TradeIngestionAssignment\bin\Debug\net10.0\Serilog.Extensions.Logging.dll
+C:\Users\gamab\source\repos\TradeIngestionAssignment\bin\Debug\net10.0\Serilog.Formatting.Compact.dll
+C:\Users\gamab\source\repos\TradeIngestionAssignment\bin\Debug\net10.0\Serilog.Settings.Configuration.dll
+C:\Users\gamab\source\repos\TradeIngestionAssignment\bin\Debug\net10.0\Serilog.Sinks.Console.dll
+C:\Users\gamab\source\repos\TradeIngestionAssignment\bin\Debug\net10.0\Serilog.Sinks.Debug.dll
+C:\Users\gamab\source\repos\TradeIngestionAssignment\bin\Debug\net10.0\Serilog.Sinks.File.dll
+C:\Users\gamab\source\repos\TradeIngestionAssignment\obj\Debug\net10.0\TradeIngestionAssignment.sourcelink.json
+C:\Users\gamab\source\repos\TradeIngestionAssignment\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

@@ -1,9 +1,15 @@
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using TradeIngestionAssignment.Data;
 using TradeIngestionAssignment.Options;
 using TradeIngestionAssignment.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext());
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -17,12 +23,6 @@ builder.Services.AddDbContext<TradeDbContext>(options =>
 
 builder.Services.AddScoped<ITradeIngestionService, TradeIngestionService>();
 builder.Services.AddScoped<IPortfolioSnapshotService, PortfolioSnapshotService>();
-
-builder.Logging.ClearProviders();
-builder.Logging.AddJsonConsole(options =>
-{
-    options.IncludeScopes = true;
-});
 
 var app = builder.Build();
 
