@@ -2,7 +2,7 @@
 
 ## Prerequisites
 - .NET SDK 10 (project target in this workspace)
-- SQL Server LocalDB (or update connection string)
+- SQL Server localhost
 
 ## Run
 1. Update connection string in `appsettings.Development.json` if needed.
