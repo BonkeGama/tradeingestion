@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/TradeIngestionAssignment.Tests/TradeIngestionAssignment.Tests.csproj" />
+  </Folder>
+  <Project Path="TradeIngestionAssignment.csproj" />
+</Solution>

@@ -1,0 +1,57 @@
+@TradeIngestionAssignment_HostAddress = http://localhost:5106
+
+POST {{TradeIngestionAssignment_HostAddress}}/api/trades
+Content-Type: application/json
+
+{
+  "external_ref": "TRX-1001",
+  "account_id": "ACC-001",
+  "isin": "US0378331005",
+  "symbol": "AAPL",
+  "side": "BUY",
+  "quantity": 120,
+  "price": 185.40,
+  "trade_date": "2025-03-01",
+  "as_of": "2025-03-01T10:15:00Z"
+}
+
+###
+
+POST {{TradeIngestionAssignment_HostAddress}}/api/trades
+Content-Type: application/json
+
+{
+  "external_ref": "TRX-1001",
+  "account_id": "ACC-001",
+  "isin": "US0378331005",
+  "symbol": "AAPL",
+  "side": "BUY",
+  "quantity": 120,
+  "price": 185.40,
+  "trade_date": "2025-03-01",
+  "as_of": "2025-03-01T10:15:00Z"
+}
+
+###
+
+POST {{TradeIngestionAssignment_HostAddress}}/api/trades
+Content-Type: application/json
+
+{
+  "external_ref": "TRX-1001",
+  "account_id": "ACC-001",
+  "isin": "US0378331005",
+  "symbol": "AAPL",
+  "side": "BUY",
+  "quantity": 100,
+  "price": 185.40,
+  "trade_date": "2025-03-01",
+  "as_of": "2025-03-01T12:00:00Z"
+}
+
+###
+
+GET {{TradeIngestionAssignment_HostAddress}}/api/snapshots/ACC-001?date=2025-03-01
+Accept: application/json
+
+###

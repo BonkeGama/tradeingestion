@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trade Ingestion Demo</title>
+    <style>
+        body { font-family: Segoe UI, Arial, sans-serif; margin: 24px; max-width: 1100px; }
+        h1, h2 { margin-bottom: 8px; }
+        .row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+        .card { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+        input, select, button { padding: 8px; font-size: 14px; }
+        input, select { min-width: 180px; }
+        button { cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #f5f5f5; }
+        pre { background: #0d1117; color: #d1f7c4; padding: 12px; border-radius: 8px; overflow: auto; }
+        .muted { color: #666; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <h1>Trade Ingestion + Snapshot Demo</h1>
+    <p class="muted">Use this UI to submit trades, replay duplicates, apply corrections, and query snapshots.</p>
+
+    <div class="card">
+        <h2>Submit Trade</h2>
+        <div class="row">
+            <input id="externalRef" value="TRX-1001" placeholder="external_ref" />
+            <input id="accountId" value="ACC-001" placeholder="account_id" />
+            <input id="isin" value="US0378331005" placeholder="isin" />
+            <input id="symbol" value="AAPL" placeholder="symbol" />
+        </div>
+        <div class="row">
+            <select id="side">
+                <option>BUY</option>
+                <option>SELL</option>
+            </select>
+            <input id="quantity" type="number" value="120" step="0.000001" placeholder="quantity" />
+            <input id="price" type="number" value="185.40" step="0.000001" placeholder="price" />
+            <input id="tradeDate" type="date" value="2025-03-01" />
+            <input id="asOf" value="2025-03-01T10:15:00Z" placeholder="as_of (UTC)" />
+        </div>
+        <div class="row">
+            <button onclick="submitTrade()">Submit Trade</button>
+            <button onclick="submitDuplicate()">Submit Duplicate</button>
+            <button onclick="submitCorrection()">Submit Correction</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Snapshot</h2>
+        <div class="row">
+            <input id="snapshotAccount" value="ACC-001" placeholder="account" />
+            <input id="snapshotDate" type="date" value="2025-03-01" />
+            <button onclick="loadSnapshot()">Load Snapshot</button>
+        </div>
+        <div id="snapshotSummary" class="muted"></div>
+        <table id="positionsTable" hidden>
+            <thead>
+                <tr>
+                    <th>ISIN</th>
+                    <th>Symbol</th>
+                    <th>Quantity</th>
+                    <th>Avg Cost USD</th>
+                    <th>Market Price USD</th>
+                    <th>Market Value USD</th>
+                    <th>Unrealized P/L USD</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>API Response</h2>
+        <pre id="output">Ready.</pre>
+    </div>
+
+    <script>
+        function getTradePayload() {
+            return {
+                external_ref: document.getElementById('externalRef').value,
+                account_id: document.getElementById('accountId').value,
+                isin: document.getElementById('isin').value,
+                symbol: document.getElementById('symbol').value,
+                side: document.getElementById('side').value,
+                quantity: Number(document.getElementById('quantity').value),
+                price: Number(document.getElementById('price').value),
+                trade_date: document.getElementById('tradeDate').value,
+                as_of: document.getElementById('asOf').value
+            };
+        }
+
+        async function submitTrade(payload = null) {
+            const body = payload ?? getTradePayload();
+            const response = await fetch('/api/trades', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            const data = await response.json();
+            print({ status: response.status, data });
+        }
+
+        async function submitDuplicate() {
+            await submitTrade(getTradePayload());
+        }
+
+        async function submitCorrection() {
+            const payload = getTradePayload();
+            payload.quantity = 100;
+            payload.as_of = '2025-03-01T12:00:00Z';
+            await submitTrade(payload);
+        }
+
+        async function loadSnapshot() {
+            const account = encodeURIComponent(document.getElementById('snapshotAccount').value);
+            const date = document.getElementById('snapshotDate').value;
+            const response = await fetch(`/api/snapshots/${account}?date=${date}`);
+            const data = await response.json();
+
+            renderSnapshot(data);
+            print({ status: response.status, data });
+        }
+
+        function renderSnapshot(snapshot) {
+            const summary = document.getElementById('snapshotSummary');
+            const table = document.getElementById('positionsTable');
+            const body = table.querySelector('tbody');
+            body.innerHTML = '';
+
+            summary.textContent = `Account ${snapshot.account_id} | Date ${snapshot.snapshot_date} | Total USD ${snapshot.total_market_value_usd}`;
+
+            for (const p of snapshot.positions ?? []) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${p.isin}</td>
+                    <td>${p.symbol}</td>
+                    <td>${p.quantity}</td>
+                    <td>${p.average_unit_cost_usd}</td>
+                    <td>${p.market_price_usd}</td>
+                    <td>${p.market_value_usd}</td>
+                    <td>${p.unrealized_pnl_usd}</td>`;
+                body.appendChild(row);
+            }
+
+            table.hidden = false;
+        }
+
+        function print(value) {
+            document.getElementById('output').textContent = JSON.stringify(value, null, 2);
+        }
+    </script>
+</body>
+</html>
